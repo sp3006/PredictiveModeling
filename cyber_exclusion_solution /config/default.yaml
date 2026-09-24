@@ -1,0 +1,26 @@
+random_seed: 42
+label_candidates: [excluded, is_excluded, label, target, y]
+positive_values: [1, true, yes, excluded, exclude]
+raw_root: null
+aws_region: us-east-1
+cv_folds: 5
+competition_metric: f1
+business:
+  auto_exclude_precision_target: 0.98
+  auto_keep_npv_target: 0.995
+  conformal_alpha: 0.05
+model:
+  iterations: 700
+  depth: 7
+  learning_rate: 0.04
+  l2_leaf_reg: 6.0
+  loss_function: Logloss
+  eval_metric: AUC
+  verbose: false
+blend:
+  tabular_weight: 0.80
+  text_weight: 0.20
+bedrock:
+  enabled: false
+  model_id: null
+  region: us-east-1
