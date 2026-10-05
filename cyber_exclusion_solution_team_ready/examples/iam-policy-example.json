@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListCompetitionRawPrefix",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::my-competition-bucket",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "2026/data/raw_scan_data/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadCompetitionRawObjects",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::my-competition-bucket/2026/data/raw_scan_data/*"
+    },
+    {
+      "Sid": "OptionalBedrockExplanation",
+      "Effect": "Allow",
+      "Action": "bedrock:InvokeModel",
+      "Resource": "*"
+    }
+  ]
+}

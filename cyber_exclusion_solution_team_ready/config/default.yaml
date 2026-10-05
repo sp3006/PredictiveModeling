@@ -1,10 +1,10 @@
 random_seed: 42
 label_candidates: [excluded, is_excluded, label, target, y]
 positive_values: [1, true, yes, excluded, exclude]
-raw_root: null
+raw_root: s3://my-competition-bucket/2026/data/raw_scan_data
 aws_region: us-east-1
 cv_folds: 5
-competition_metric: f1
+competition_metric: average_precision
 business:
   auto_exclude_precision_target: 0.98
   auto_keep_npv_target: 0.995
@@ -18,6 +18,7 @@ model:
   eval_metric: AUC
   verbose: false
 blend:
+  optimize_for_average_precision: true
   tabular_weight: 0.80
   text_weight: 0.20
 bedrock:

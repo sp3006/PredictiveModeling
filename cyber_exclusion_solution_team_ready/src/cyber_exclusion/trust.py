@@ -32,8 +32,11 @@ def attach_trust_fields(features: pd.DataFrame, predictions: pd.DataFrame) -> pd
     out = predictions.copy()
     out["evidence_coverage"] = evidence_coverage(features).values
     out["model_margin"] = np.abs(out["p_exclude"] - 0.5) * 2
+    validated = out.get("trust_validated", pd.Series(True, index=out.index)).astype(bool)
     out["trust_score"] = (0.65 * out["model_margin"] + 0.35 * out["evidence_coverage"]).clip(0, 1)
+    out.loc[~validated, "trust_score"] = np.nan
     out["review_reason"] = ""
+    out.loc[~validated, "review_reason"] += "UNVALIDATED_CALIBRATION;"
     out.loc[out["evidence_coverage"] < 0.4, "review_reason"] += "LOW_EVIDENCE;"
     out.loc[out["conformal_set"] == "{KEEP,EXCLUDE}", "review_reason"] += "MODEL_AMBIGUITY;"
     return out
